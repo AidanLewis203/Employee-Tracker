@@ -3,9 +3,9 @@ require('dotenv').config();
 
 const db = mysql.createConnection({
   host: 'localhost',
-  user: 'root',
+  user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
-  database: 'employee_tracker_db',
+  database: 'company_db',
 });
 
 module.exports = db

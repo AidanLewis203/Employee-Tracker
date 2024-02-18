@@ -1,5 +1,5 @@
 const inquirer = require('inquirer');
-const db = require('./db/connection');
+const db = require('./config/connection');
 
 db.connect(err => {
   if (err) throw err;
@@ -56,7 +56,7 @@ function init() {
 
 const viewDepartments = () => {
   console.log('Viewing all departments...\n');
-  db.query('SELECT * FROM department', (err, results) => {
+  db.query('SELECT * FROM departments', (err, results) => {
     if (err) throw err;
     console.table(results);
     init();
@@ -65,7 +65,7 @@ const viewDepartments = () => {
 
 const viewRoles = () => {
   console.log('Viewing all roles...\n');
-  db.query('SELECT * FROM role', (err, results) => {
+  db.query('SELECT * FROM roles', (err, results) => {
     if (err) throw err;
     console.table(results);
     init();
@@ -74,7 +74,7 @@ const viewRoles = () => {
 
 const viewEmployees = () => {
   console.log('Viewing all employees...\n');
-  db.query('SELECT * FROM employee', (err, results) => {
+  db.query('SELECT * FROM employees', (err, results) => {
     if (err) throw err;
     console.table(results);
     init();
@@ -90,7 +90,7 @@ const addDepartment = () => {
     })
     .then(answer => {
       db.query(
-        'INSERT INTO department SET ?',
+        'INSERT INTO departments SET ?',
         {
           name: answer.departmentName
         },
@@ -124,7 +124,7 @@ const addRole = () => {
     ])
     .then(answer => {
       db.query(
-        'INSERT INTO role SET ?',
+        'INSERT INTO roles SET ?',
         {
           title: answer.roleTitle,
           salary: answer.salary,
@@ -164,7 +164,7 @@ const addEmployee = () => {
       }
     ]).then (answer => {
         db.query(
-          'INSERT INTO employee SET ?',
+          'INSERT INTO employees SET ?',
           {
             first_name: answer.firstName,
             last_name: answer.lastName,
@@ -196,7 +196,7 @@ const updateEmployeeRole = () => {
     ])
     .then(answer => {
       db.query(
-        'UPDATE employee SET ? WHERE ?',
+        'UPDATE employees SET ? WHERE ?',
         [
           {
             role_id: answer.roleId
